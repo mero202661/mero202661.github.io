@@ -128,8 +128,8 @@
 
     function getVideos(){
         const API_link = 'https://api.github.com/';
-       const owner = 'elsehrawy20261';
-       const repo = 'elsehrawy20261.github.io'
+       const owner = 'mero202661'//'elsehrawy20261';
+       const repo = owner+'.github.io'
        const videosPath = 'Elsehrawy_Reels_ED'
        const link = API_link + 'repos/' + owner + '/' + repo + '/contents/' + videosPath;
        fetch(link,{ method:"get"})
@@ -151,7 +151,7 @@
         let video = document.createElement('video');
         video.src = 'https://elsehrawy20261.github.io/Elsehrawy_Reels_ED/' + videoId;
         //video.loop = true;
-        video.playsinline = true;
+        video.setAttribute('playsinline', 'true');
         video.id = 'video-'+index;
         video.controls = true;
         video.allow = 'autoplay';
