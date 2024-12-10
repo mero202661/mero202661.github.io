@@ -156,7 +156,7 @@
         video.controls = true;
         video.allow = 'autoplay';
 
-        video.onended = (event)=>{
+        video.onended = function (event){
             if(loop){ // loop or go to next video
                 this.play();
             }else{
