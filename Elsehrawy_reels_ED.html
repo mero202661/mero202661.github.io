@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elsehrawy Reels</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background: #2d2d2d;
+        }
+        .project-title {
+            position: absolute;
+            margin: 25px;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+
+        }
+        .video-container{
+            max-width: 100%;
+            height: 100vh;
+            text-align: center;
+            scroll-snap-align: start;
+        }
+        video{
+            max-width: 100%;
+            height: 100%;
+        }
+
+        #scoller{
+            height: 100%;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+
+
+/* ======================== */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+/* ======================== */
+
+    </style>
+</head>
+<body>
+    <h1 class="project-title">
+        Elsehrawy Reels
+        
+        <label id="loop" class="switch" >
+            <input type="checkbox" onclick="loopFun()">
+            <span class="slider round"></span>
+        </label>
+
+    </h1>
+    
+    <div id="scoller"></div>
+</body>
+</html>
+
+<script>
+
+    var loop = false;
+    var videosIds=[]
+    
+    function loopFun(){
+        loop = !loop;
+    }
+
+    function getVideos(){
+        const API_link = 'https://api.github.com/';
+       const owner = 'elsehrawy20261';
+       const repo = 'elsehrawy20261.github.io'
+       const videosPath = 'Elsehrawy_Reels_ED'
+       const link = API_link + 'repos/' + owner + '/' + repo + '/contents/' + videosPath;
+       fetch(link,{ method:"get"})
+       .then(res=>{ return res.json() })
+       .then(JsonData=>{
+        videosIds = JsonData.map(file=>file.name)
+        createAllVideos();
+    })
+    }
+
+    getVideos();
+
+    function createAllVideos(){
+        videosIds.forEach((videoId,index)=>{
+            createVideo(videoId,index);
+        })
+    }
+    function createVideo(videoId,index){
+        let video = document.createElement('video');
+        video.src = 'https://elsehrawy20261.github.io/Elsehrawy_Reels_ED/' + videoId;
+        //video.loop = true;
+        video.playsinline = true;
+        video.id = 'video-'+index;
+        video.controls = true;
+        video.allow = 'autoplay';
+
+        video.onended = (event)=>{
+            if(loop){ // loop or go to next video
+                this.play();
+            }else{
+                document.getElementById('video-'+(index+1)).scrollIntoView()
+            }
+        };
+
+        let videoContainer = document.createElement('div');
+        videoContainer.classList.add('video-container');
+        videoContainer.appendChild(video)
+      
+        document.getElementById('scoller').appendChild(videoContainer)
+    }
+    
+    document.getElementById("scoller").addEventListener('scroll',function(){
+        const targetVideo = document.elementFromPoint(window.innerWidth/2,window.innerHeight/2,)
+        const playingVideos = document.querySelectorAll('video[isPlaying="true"]')
+
+        if(playingVideos && playingVideos.length > 0){
+            playingVideos.forEach((elm)=>{
+                elm.setAttribute('isPlaying','false');
+                elm.pause();
+            })
+        }
+      
+        if(targetVideo){
+            targetVideo.play();
+            targetVideo.setAttribute('isPlaying','true')
+        }
+    })
+
+</script>
