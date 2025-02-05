@@ -4,47 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello world</h1>
-    <div id="messages"></div>
-    <input type="text" id="message" >
-    <button onclick="sendMessage()">send</button>
-    <script>
-        function writeMessage(val){
-            const messageSpan = document.createElement('p');
-            messageSpan.textContent = val
-            document.getElementById("messages").appendChild(messageSpan)
+    <title>Elsehrawy Chat</title>
+    <style>
+        html, body{
+            height: 100%;
+            margin: 0;
+        }
+        .chat-container{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-image: url('./chat-background.png');
+            background-size: contain;
+        }
+        #connectionID{
+            text-align: center;
+        }
+        #messages{
+            width: 500px;
+            margin: auto;
+            flex: 1;
+            border-radius: 10px;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 5px 0;
+        }
+        #message-input,#connection-input{
+            width: 500px;
+            max-width: 100%;
+            margin: auto;
+            display: flex;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #message-input{
+            display: none;
+        }
+        input{
+            flex: 1;
+            border-radius: 10px;
+            border: 1px solid #cbcbcb;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .me,.user{
+            margin: 5px 20px;
+            background-color: #fff;
+            width: fit-content;
+            padding: 5px 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .me{
+            background-color: #e4ffc9;
+            margin-left: auto;
+        }
+        .user::before{
+            content: '';
+            border-top: 0 solid transparent;
+            border-right: 15px solid #fff;
+            border-bottom: 15px solid transparent;
+            left: -12px;
+            position: absolute;
+            top: 0px;
+        }
+        .me::after{
+            content: '';
+            border-top: 0 solid transparent;
+            border-left: 15px solid #e4ffc9;
+            border-bottom: 15px solid transparent;
+            right: -12px;
+            position: absolute;
+            top: 0px;
         }
 
-        writeMessage('hello');
-        writeMessage('hello'); 
-        writeMessage('hello');
+        #send-btn,#connection-btn{
+            color: #fff;
+            background-color: #01877c;
+            border: 0;
+            margin-left: 5px;
+            border-radius: 10px;
+            padding: 5px 10px;
+        }
+        #connection-btn{
+            background-color: #014687;
+        }
+    </style>
+</head>
+<body>  
+    <div class="chat-container">
         
+        <h2 id="connectionID"> </h2>
+
+        <div id="messages"></div>
+
+        <div id="connection-input">
+            <input type="text" id="connectId" value="Elsehrawy-Chat-User-">
+            <button onclick="connect()" id="connection-btn">Connect</button> 
+        </div>
+
+        <div id="message-input">
+            <input type="text" id="message">
+            <button onclick="sendMessage()" id="send-btn">Send</button>
+        </div>
+
+    </div>
+        
+    <script>
+
+        const connectionID = 'Elsehrawy-Chat-User-' + getRandomInt(1,100);
+
+        var conn;
+        var peerId;
+        var peer = new Peer(connectionID);
+
+        peer.on("open", function (id) {
+            peerId = id;
+            document.getElementById("connectionID").textContent = connectionID;
+            console.log('==connectionId==',id)
+        });
+
+        peer.on("error", function (e) { console.log(e);  alert(e); })
+
+        peer.on("connection", gotConnection)
+
+        /*====---=====*/
+        function connect(){
+            const remoteID = document.getElementById("connectId").value;
+            console.log("connect to", remoteID);
+            var conn = peer.connect(remoteID)
+            gotConnection(conn)
+        }
+        /*====---=====*/
+        function gotConnection(Connection) {
+            conn = Connection
+            console.log('==  Connection ==',conn);
+            conn.on("error", function (err) { console.log("connection error", err, conn)  });
+            conn.on("open", function () {
+                console.log("== Connection open == ", conn);
+                document.getElementById("message-input").style.display = 'flex'
+                document.getElementById("connection-input").style.display = 'none'
+                conn.send('started connection with ' + peerId);
+                conn.on("data", function (data) {
+                    console.log("== got data ==", data);
+                    writeMessage(data,'user')
+                })
+            })
+        }
+        /*====---=====*/
         function sendMessage(){
             const value = document.getElementById("message").value;
             document.getElementById("message").value = '';
-            //writeMessage(value);
             conn.send(value);
+            writeMessage(value,'me')
         }
-        var peer = new Peer();
-        var conn = peer.connect('another-peers-id');
         /*====---=====*/
-        // on open will be launch when you successfully connect to PeerServer
-        conn.on('open', function(){
-            // here you have conn.id
-            conn.send('hi!');
-        });
-        /*=====---====*/
-        peer.on('connection', function(conn) {
-            conn.on('data', function(data){
-                // Will print 'hi!'
-                writeMessage(data);
-            });
-        });
-    /*====---=====*/
-
+        function writeMessage(val, sender){
+            const message = document.createElement('p');
+            message.classList.add(sender);
+            message.textContent = val;
+            document.getElementById("messages").appendChild(message)
+        }
+        /*====---=====*/
+        function getRandomInt(min, max){
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
     </script>
 </body>
 </html>
