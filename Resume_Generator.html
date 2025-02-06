@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title> Resume Generator </title>
+
+</head>
+<style>
+
+    body, input, textarea, ::placeholder{
+        font-family: "Roboto", serif;
+    }
+    
+    @media print {
+        @page { 
+            margin: 0;
+        }
+
+        body {
+            visibility: hidden;
+            -webkit-print-color-adjust: exact;
+        }
+        #section-to-print {
+            visibility: visible;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    
+    #resume-name{
+        border: 0;
+        font-size: 30px;
+        outline: none;
+        margin: 25px 0;
+        width: 100%;
+    }
+    
+    #resume-name, #resume-name::placeholder{
+        color: #EA4C89;
+        background-color: transparent;
+    }
+    .PDF-builder{
+        max-width: 800px;
+        height: 800px;
+        margin: auto;
+    }
+
+    #section-to-print{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        border: 1px solid;
+        box-sizing: border-box;
+    }
+
+    #left-side{
+        max-width: 200px;
+        display: flex;
+        flex-direction: column;
+        background-color: #4c71ea;
+        padding: 30px 10px;
+        padding-top: 50px ;
+    }
+
+    #right-side{
+        display: flex;
+        flex-direction: column;
+        padding: 60px 20px;
+        background: #fbfbfb;
+        flex: 1;
+    }
+
+    #left-side *, #left-side ::placeholder{
+        color: #fff;
+        outline-color: #fff;
+    }
+    
+    textarea{
+        border: 0;
+        margin: 10px;
+        font-size: 14px;
+        resize: none;
+        overflow:hidden;
+        background-color: transparent;
+        max-width: 100%;
+    }
+
+    #resume-img-container{
+        border: 5px solid #ffffff;
+        background-color: #FFFFFF;
+        border-radius: 100%;
+        width: 100px;
+        height: 100px;
+        overflow:hidden;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    #DownloadBtn {
+        margin: 30px auto;
+        width: 200px;
+        display: block;
+        background-color: #EA4C89;
+        border-radius: 8px;
+        border-style: none;
+        color: #FFFFFF;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 10px 16px;
+    }
+
+    h4,h3{
+        margin: 5px 0;
+    }
+
+</style>
+<body>
+    <div class="PDF-builder">
+
+        <p style="text-align: center;font-size: 30px;"> Resume Generator By Elsehrawy Channel</p>
+
+        <div id="section-to-print">
+            <input id="resume-img-input" style="display: none;" type="file" accept="image/*" onchange="loadImage(event)">
+            <div id="left-side">
+                <label for="resume-img-input" id="resume-img-container">
+                    <img  id="resume-img" width="100%" />
+                </label>
+
+                <h4>Contact</h4>
+                <textarea name="" id="" rows="3" placeholder="Put your Contact here"></textarea>
+
+                <h4>Sckills</h4>
+                <textarea name="" id="" rows="3" placeholder="Put your Sckills here"></textarea>
+                
+                <h4>Languages</h4>
+                <textarea name="" id="" rows="3" placeholder="Put your Languages here"></textarea>
+
+            </div>
+
+            <div id="right-side">
+
+                <input id="resume-name" type="text" placeholder="Put your name here" value="">
+                    
+                <h3>About Me</h3>
+                <textarea name="" id="" rows="5" placeholder="Put your Bio here"></textarea>
+
+                <h3>Education</h3>
+                <textarea name="" id="" rows="4" placeholder="Put your Education here"></textarea>
+
+                <h3>Experience</h3>
+                <textarea name="" id="" rows="5" placeholder="Put your Experience here"></textarea>
+
+            </div>
+        </div>
+
+    
+        <button id="DownloadBtn" onclick="printDiv()">Download Resume</button>
+
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+    /*function loadFileAsBlob2(event) {
+        var output = document.getElementById('resume-img');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };*/
+
+    function loadImage(event) {
+        let myReader = new FileReader();
+        myReader.readAsDataURL(event.target.files[0]);
+        myReader.onloadend = () => {  
+            document.getElementById('resume-img').src = myReader.result; 
+        }
+    };
+    
+    function printDiv() {
+        window.print();
+    }
+
+</script>
+
