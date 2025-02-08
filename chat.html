@@ -244,7 +244,7 @@
             console.log('====Got=call===',call);
             call.on('stream', (remoteStream) => {
                 console.log('=== Got Call stream ===', remoteStream);
-                RemoteVideoPlayer.srcObject = MyStream;
+                RemoteVideoPlayer.srcObject = remoteStream;
                 MyVideoPlayer.srcObject = MyStream;
             });
         }
