@@ -58,6 +58,13 @@
             font-size: 16px;
             outline: none;
         }
+        .system{
+            margin: 0 auto;
+            padding: 5px 10px;
+            font-size: 14px;
+            background: #7aaeff;
+            border-radius: 10px
+        }
         .me,.user{
             margin: 5px 20px;
             background-color: #fff;
@@ -101,6 +108,18 @@
         #connection-btn{
             background-color: #014687;
         }
+
+        #My_Video_Player, #Remote_Video_Player{
+            width: 50%;
+        }
+
+        #My_Video_Player{
+            left: 0;
+        }
+
+        #Remote_Video_Player{
+            right: 0;
+        }
     </style>
 </head>
 <body>  
@@ -118,56 +137,87 @@
         <div id="message-input">
             <input type="text" id="message">
             <button onclick="sendMessage()" id="send-btn">Send</button>
+            <button onclick="call()" id="connection-btn">Call</button> 
         </div>
+
+        <video id="My_Video_Player" autoplay controls playsinline></video>
+        <video id="Remote_Video_Player" autoplay controls playsinline></video>
 
     </div>
         
     <script>
-
-        const connectionID = 'Elsehrawy-Chat-User-' + getRandomInt(1,1000);
+        const MyVideoPlayer = document.getElementById("My_Video_Player")
+        const RemoteVideoPlayer = document.getElementById("Remote_Video_Player")
+        const MyConnectionID = 'Elsehrawy-Chat-User-' + getRandomInt(1,1000);
 
         var conn;
-        var peerId;
-        var peer = new Peer(connectionID);
-
+        var MyStream;
+        var RemoteConnectionID;
+        var peer = new Peer(MyConnectionID);
+        /*====---=====*/
         peer.on("open", function (id) {
-            peerId = id;
-            document.getElementById("connectionID").textContent = connectionID;
+            document.getElementById("connectionID").textContent = MyConnectionID;
             console.log('==connectionId==',id)
         });
-
+        /*====---=====*/
         peer.on("error", function (e) { console.log(e);  alert(e); })
-
+        /*====---=====*/
         peer.on("connection", gotConnection)
-
+        /*====---=====*/
+        peer.on('call', (call) => {
+            console.log('==on==call===');
+            initStream(()=>{
+                call.answer(MyStream);
+                gotCall(call)
+            })
+        });
         /*====---=====*/
         function connect(){
-            const remoteID = document.getElementById("connectId").value;
-            console.log("connect to", remoteID);
-            var conn = peer.connect(remoteID)
+            RemoteConnectionID = document.getElementById("connectId").value;
+            console.log("connect to", RemoteConnectionID);
+            var conn = peer.connect(RemoteConnectionID)
             gotConnection(conn)
+        }
+        /*====---=====*/
+        function call(){
+            console.log("calling ", RemoteConnectionID);
+            initStream(()=>{
+                const call = peer.call(RemoteConnectionID, MyStream);
+                gotCall(call)
+            })
         }
         /*====---=====*/
         function gotConnection(Connection) {
             conn = Connection
+            RemoteConnectionID = Connection.peer;
             console.log('==  Connection ==',conn);
             conn.on("error", function (err) { console.log("connection error", err, conn)  });
+            conn.on("MyKey",()=>{console.log("== MyKey == ")})
             conn.on("open", function () {
                 console.log("== Connection open == ", conn);
-                document.getElementById("message-input").style.display = 'flex'
-                document.getElementById("connection-input").style.display = 'none'
-                conn.send('started connection with ' + peerId);
+                document.getElementById("message-input").style.display = 'flex';
+                document.getElementById("connection-input").style.display = 'none';
+
+
+                conn.send({type: 'SYSTEM_MESSAGE', value: 'Started connection with ' + MyConnectionID});
+
                 conn.on("data", function (data) {
-                    console.log("== got data ==", data);
-                    writeMessage(data,'user')
-                })
+                    console.log("== got data ==",data);
+                    if(data.type === 'MESSAGE'){
+                        writeMessage(data.value,'user')
+                    }else if(data.type === 'SYSTEM_MESSAGE'){
+                        writeMessage(data.value,'system')
+                    }
+                });
+
             })
         }
+
         /*====---=====*/
         function sendMessage(){
             const value = document.getElementById("message").value;
             document.getElementById("message").value = '';
-            conn.send(value);
+            conn.send({type: 'MESSAGE' , value});
             writeMessage(value,'me')
         }
         /*====---=====*/
@@ -181,6 +231,25 @@
         function getRandomInt(min, max){
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
+        /*======*/
+        function initStream(cb){
+            navigator.mediaDevices.getUserMedia({audio:true, 
+                video: { facingMode:  'user' } }).then(function(streamObject) {
+                MyStream = streamObject;
+                cb()
+            });
+        }
+
+        function gotCall(call){
+            console.log('====Got=call===',call);
+            call.on('stream', (remoteStream) => {
+                console.log('=== Got Call stream ===', remoteStream);
+                RemoteVideoPlayer.srcObject = MyStream;
+                MyVideoPlayer.srcObject = MyStream;
+            });
+        }
+
+        
     </script>
 </body>
 </html>
