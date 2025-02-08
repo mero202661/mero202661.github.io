@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Elsehrawy Chat</title>
     <style>
         html, body{
             height: 100%;
             margin: 0;
         }
+        #chat{
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
         .chat-container{
             font-family: "Roboto", serif;
-            display: flex;
-            flex-direction: column;
             height: 100%;
             background-image: url('./chat-background.png');
             background-size: contain;
@@ -39,13 +43,23 @@
             flex-direction: column;
             padding: 5px 0;
         }
-        #message-input,#connection-input{
+      
+        #message-input,#connection-input,#signup-input{
             width: 600px;
             max-width: 100%;
             margin: auto;
             display: flex;
             padding: 20px 10px;
             box-sizing: border-box;
+        }
+        #signup-input, #connection-input{
+            margin: auto;
+            height: 80px;
+            position: absolute;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
         }
         #message-input{
             display: none;
@@ -59,10 +73,10 @@
             outline: none;
         }
         .system{
-            margin: 0 auto;
+            margin: 5px auto;
             padding: 5px 10px;
             font-size: 14px;
-            background: #7aaeff;
+            background: #7aaeff4f;
             border-radius: 10px
         }
         .me,.user{
@@ -96,9 +110,9 @@
             top: 0px;
         }
 
-        #send-btn,#connection-btn{
+        #send-btn,#connection-btn,#signup-btn{
             color: #fff;
-            background-color: #01877c;
+            background-color: #075e54;
             border: 0;
             margin-left: 5px;
             border-radius: 10px;
@@ -109,83 +123,146 @@
             background-color: #014687;
         }
 
-        #My_Video_Player, #Remote_Video_Player{
-            width: 50%;
-        }
-
-        #My_Video_Player{
-            left: 0;
-        }
-
-        #Remote_Video_Player{
+        #call_screen_bg{
+            position: absolute;
             right: 0;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            background:#1f1f1f;
+            display: none;
+        }
+        .call_screen{
+            height: 100%;
+            width: 50%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        #My_Video_Player, #Remote_Video_Player{
+            display: block;
+            flex: 1;
+        }
+        #close-btn{
+            cursor: pointer;
+            background-color: red;
+            color: #fff;
+            width: fit-content;
+            margin: 10px auto;
+            padding: 3px 15px;
+            border-radius: 10px;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>  
+    
     <div class="chat-container">
         
-        <p id="connectionID"> </p>
-
-        <div id="messages"></div>
-
-        <div id="connection-input">
-            <input type="text" id="connectId" value="Elsehrawy-Chat-User-">
-            <button onclick="connect()" id="connection-btn">Connect</button> 
+    
+        <div id="signup-input">
+            <input type="text" id="userId" value="">
+            <button onclick="start()" id="signup-btn">Signup</button> 
         </div>
+        
 
-        <div id="message-input">
-            <input type="text" id="message">
-            <button onclick="sendMessage()" id="send-btn">Send</button>
-            <button onclick="call()" id="connection-btn">Call</button> 
+        <div id="chat">
+            <p id="connectionID"></p>
+
+            <div id="connection-input">
+                <input type="text" id="connectId" value="">
+                <button onclick="connect()" id="connection-btn">Connect</button> 
+            </div>
+    
+            <div id="messages"></div>
+    
+            
+            <div id="message-input">
+                
+                <input type="text" id="message">
+                <button onclick="sendMessage()" id="send-btn">
+                    <i class="fa fa-send" style="font-size: 20px;"></i>
+                </button>
+    
+                <button onclick="call()" id="connection-btn">
+                    <i class="fa fa-phone" style="font-size: 25px;"></i>
+                </button> 
+            </div>
         </div>
-
-        <video id="My_Video_Player" autoplay controls playsinline></video>
-        <video id="Remote_Video_Player" autoplay controls playsinline></video>
-
+        
+        
+        <div id="call_screen_bg">
+            <div class="call_screen">
+                <video id="My_Video_Player" autoplay controls playsinline></video>
+                <video id="Remote_Video_Player" autoplay controls playsinline></video>
+                <span id="close-btn" onclick="closeCall()">
+                    <i class="fa fa-phone" style="font-size: 25px;transform: rotate(135deg);"></i>
+                </span>
+            </div>
+        </div>
+        
     </div>
         
     <script>
         const MyVideoPlayer = document.getElementById("My_Video_Player")
         const RemoteVideoPlayer = document.getElementById("Remote_Video_Player")
-        const MyConnectionID = 'Elsehrawy-Chat-User-' + getRandomInt(1,1000);
+        // const MyConnectionID = 'Elsehrawy-Chat-User-' + getRandomInt(1,1000);
 
+        var peer;
         var conn;
+        var callConnection;
         var MyStream;
         var RemoteConnectionID;
-        var peer = new Peer(MyConnectionID);
-        /*====---=====*/
-        peer.on("open", function (id) {
-            document.getElementById("connectionID").textContent = MyConnectionID;
-            console.log('==connectionId==',id)
-        });
-        /*====---=====*/
-        peer.on("error", function (e) { console.log(e);  alert(e); })
-        /*====---=====*/
-        peer.on("connection", gotConnection)
-        /*====---=====*/
-        peer.on('call', (call) => {
-            console.log('==on==call===');
-            initStream(()=>{
-                call.answer(MyStream);
-                gotCall(call)
-            })
-        });
+
+        function start(){
+            MyConnectionID = document.getElementById("userId").value;
+            if(!MyConnectionID || MyConnectionID.length < 7){return alert('please enter a valid nubmer') }
+            peer = new Peer(MyConnectionID);
+            /*====---=====*/
+            peer.on("open", function (id) {
+                document.getElementById("signup-input").style.display = 'none';
+                document.getElementById("chat").style.display = 'flex';
+                document.getElementById("connectionID").textContent = MyConnectionID;
+                console.log('==connectionId==',id)
+            });
+            /*====---=====*/
+            peer.on("error", function (e) { console.log(e);  alert(e); })
+            /*====---=====*/
+            peer.on("connection", gotConnection)
+            /*====---=====*/
+            peer.on('call', (call) => {
+                console.log('==on==call===');
+                if(confirm(call.peer +' want to call you')){
+                    initStream(()=>{
+                        call.answer(MyStream);
+                        gotCall(call)
+                    })
+                }
+                
+            });
+        }
+        
         /*====---=====*/
         function connect(){
             RemoteConnectionID = document.getElementById("connectId").value;
             console.log("connect to", RemoteConnectionID);
-            var conn = peer.connect(RemoteConnectionID)
+            conn = peer.connect(RemoteConnectionID)
             gotConnection(conn)
         }
         /*====---=====*/
         function call(){
             console.log("calling ", RemoteConnectionID);
             initStream(()=>{
-                const call = peer.call(RemoteConnectionID, MyStream);
-                gotCall(call)
+                callConnection = peer.call(RemoteConnectionID, MyStream);
+                gotCall(callConnection)
             })
         }
+
+        function closeCall(){
+            callConnection.close();
+            //stopCallVideos()
+        }
+
         /*====---=====*/
         function gotConnection(Connection) {
             conn = Connection
@@ -231,25 +308,44 @@
         function getRandomInt(min, max){
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        /*======*/
+        /*===---===*/
         function initStream(cb){
-            navigator.mediaDevices.getUserMedia({audio:true, 
-                video: { facingMode:  'user' } }).then(function(streamObject) {
+            navigator.mediaDevices.getUserMedia({
+                audio:true, 
+                video: { facingMode:  'user' } 
+            }).then(function(streamObject) {
                 MyStream = streamObject;
                 cb()
             });
         }
-
+        /*===---===*/
         function gotCall(call){
+            callConnection = call;
+            
             console.log('====Got=call===',call);
+            conn.send({type: 'SYSTEM_MESSAGE', value: 'Video call started '});
+
+            document.getElementById("call_screen_bg").style.display = 'flex';
+
             call.on('stream', (remoteStream) => {
                 console.log('=== Got Call stream ===', remoteStream);
                 RemoteVideoPlayer.srcObject = remoteStream;
                 MyVideoPlayer.srcObject = MyStream;
             });
+
+            call.on('close', stopCallVideos);
         }
 
-        
+        function stopCallVideos(){
+            conn.send({type: 'SYSTEM_MESSAGE', value: 'Video call ended '});
+            console.log('====close=call===='); 
+            document.getElementById("call_screen_bg").style.display = 'none';
+            MyStream.getTracks().forEach(track => { track.stop(); });
+            RemoteVideoPlayer.srcObject = null;
+            MyVideoPlayer.srcObject = null;
+        }
+        /*===---===*/
+
     </script>
 </body>
 </html>
