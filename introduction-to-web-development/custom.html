@@ -4,37 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Corner - ABC Fitness Studio</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa" rel="stylesheet">
+    <style>
+        html,body{
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            min-height: 100vh;
+            font-family: "Comfortaa", serif;
+        }
+    </style>
 </head>
-<body >
+<body class="pb-96 text-[#00231c]">
 
-    <nav >
-        <div >
+    <nav class="bg-[#17253f] border-gray-200">
+        <div class="w-[1200px] max-w-full flex flex-wrap items-center justify-between mx-auto p-2">
 
-        <a href="" >
-            <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/38776/file/99479a5eb4cc292fa8b3cd82406bc208.png"  />
-            <span >Community Corner</span>
+        <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/38776/file/99479a5eb4cc292fa8b3cd82406bc208.png"   class="h-11 px-2" alt="ABC Fitness Studio Logo"/>
+            <span class="text-white self-center text-2xl font-semibold whitespace-nowrap">Community Corner</span>
         </a>
 
-        <button data-collapse-toggle="navbar-default" id="navbar-default-button" type="button" aria-controls="navbar-default" aria-expanded="false">
-            <span >Open main menu</span>
-            <svg >
+        <button data-collapse-toggle="navbar-default" id="navbar-default-button" type="button" class="cursor-pointer text-white inline-flex 
+        items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden 
+        focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
         </button>
 
-        <div >
-            <ul >
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg 
+            md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             <li>
-                <a  href="index.html" >Home</a>
+                <a  href="index.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Home</a>
             </li>
             <li>
-                <a href="gallery.html" >Gallery</a>
+                <a href="gallery.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Gallery</a>
             </li>
             <li>
-                <a href="about.html">About Us</a>
+                <a href="about.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">About Us</a>
             </li>
             <li>
-                <a href="custom.html">Community</a>
+                <a href="custom.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Community</a>
             </li>
             </ul>
         </div>
@@ -42,30 +56,30 @@
         </div>
     </nav>
 
-    <main >
+    <main class="h-full mb-12 w-[900px] max-w-full m-auto p-3">
 
-        <h1 >Customer Spotlight</h1>
+        <h1 class="text-xl font-bold my-2">Customer Spotlight</h1>
 
-        <div >
+        <div class="inline-block w-full bg-[#2343bd] my-3 p-3 text-center">
 
-            <div >
-                <div > 
-                    <p >  Emily R. – Yoga Enthusiast </p>
-                    <p > The individual yoga sessions have transformed my flexibility and mindfulness. The personalized guidance has helped me feel more balanced and stress-free! </p>
+            <div class="w-full md:w-1/3  float-right p-2">
+                <div class="inline-block w-full bg-[#fcfcfc] rounded p-2 h-48"> 
+                    <p class="font-bold">  Emily R. – Yoga Enthusiast </p>
+                    <p class=""> The individual yoga sessions have transformed my flexibility and mindfulness. The personalized guidance has helped me feel more balanced and stress-free! </p>
                 </div> 
             </div>
             
-            <div >
-                <div > 
-                    <p > Jake M. – Kickboxing Fanatic </p>
-                    <p > The group kickboxing classes are intense and fun! I’ve gained strength, confidence, and a great community to train with. </p>
+            <div class="w-full md:w-1/3 float-right p-2">
+                <div class="inline-block w-full bg-[#fcfcfc] rounded p-2 h-48"> 
+                    <p class="font-bold"> Jake M. – Kickboxing Fanatic </p>
+                    <p class=""> The group kickboxing classes are intense and fun! I’ve gained strength, confidence, and a great community to train with. </p>
                 </div> 
             </div>
             
-            <div >
-                <div > 
-                    <p > Sophia L. – Pilates Lover </p>
-                    <p 
+            <div class="w-full md:w-1/3 float-right p-2">
+                <div class="inline-block w-full bg-[#fcfcfc] rounded p-2 h-48"> 
+                    <p class="font-bold"> Sophia L. – Pilates Lover </p>
+                    <p class=""> Pilates has improved my posture and core strength tremendously. The group sessions keep me motivated and challenged!"
 
                         Would you like any adjustments? 😊 </p>
                 </div> 
@@ -73,23 +87,23 @@
             
         </div>
 
-        <h1 >Community Involvement </h1>
+        <h1 class="text-xl font-bold my-2">Community Involvement </h1>
 
 
-        <div >
+        <div class="inline-block w-full my-3 text-center">
             
            
-            <div >
-                <div > 
-                    <p > Free Monthly Fitness Workshops </p>
-                    <p > We host free community fitness workshops, including yoga, Pilates, and kickboxing, to promote health and wellness for all. Open to all experience levels! </p>
+            <div class="w-full md:w-1/2 float-right p-1">
+                <div class="inline-block w-full bg-[#2343bd] text-white rounded p-2 h-40"> 
+                    <p class="font-bold"> Free Monthly Fitness Workshops </p>
+                    <p class=""> We host free community fitness workshops, including yoga, Pilates, and kickboxing, to promote health and wellness for all. Open to all experience levels! </p>
                 </div> 
             </div>
 
-            <div >
-                <div > 
-                    <p > Charity Fitness Events </p>
-                    <p > We partner with local charities to organize workout events where proceeds support important causes, helping to give back while staying active.
+            <div class="w-full md:w-1/2 float-right p-1">
+                <div class="inline-block w-full bg-[#2343bd] text-white rounded p-2 h-40"> 
+                    <p class="font-bold"> Charity Fitness Events </p>
+                    <p class=""> We partner with local charities to organize workout events where proceeds support important causes, helping to give back while staying active.
 
                         Let me know if you'd like any changes! </p>
                 </div> 
@@ -97,8 +111,8 @@
             
         </div>
 
-        <div >
-            <h1 >Events & Collaborations</h1>
+        <div class="inline-block">
+            <h1 class="text-xl font-bold my-2">Events & Collaborations</h1>
             <p>Exciting things are coming your way! Keep an eye out for upcoming events, exclusive collaborations, and new fitness programs. From high-energy group sessions to personalized training experiences, there's something for everyone.
     
                 Stay connected and be the first to know about special offers, community initiatives, and new workout gear. Whether you're looking to challenge yourself, meet like-minded fitness enthusiasts, or simply stay active, we've got something in store for you.
@@ -110,32 +124,32 @@
     </main>
 
 
-    <footer >
-        <div >
-            <div >
-                <a  >Facebook</a>
-                <a  >Instagram</a>
-                <a  >Twitter</a>
-                <a  >Youtube</a>
+    <footer class="bg-[#17253f] absolute bottom-0 inset-x-0">
+        <div class="w-[1200px] max-w-full m-auto">
+            <div class="flex  w-fit m-auto md:float-right md:m-2 text-white">
+                <a  class="p-1" href="#">Facebook</a>
+                <a  class="p-1" href="#">Instagram</a>
+                <a  class="p-1" href="#">Twitter</a>
+                <a  class="p-1" href="#">Youtube</a>
             </div>
-            <div >
-                <label for="" >Sign up for newsletter</label>
-                <input type="text" >
-                <button >Subscribe</button>
+            <div class="w-96 p-2 float-left">
+                <label for="" class="w-full block py-2 text-white">Sign up for newsletter</label>
+                <input type="text" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" placeholder="Your Email">
+                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5">Subscribe</button>
             </div>
-            <div >
-                <ul >
+            <div class="text-center w-full inline-block my-2">
+                <ul class="font-medium w-fit m-auto flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse">
                     <li>
-                        <a  href="index.html" >Home</a>
+                        <a  href="index.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="gallery.html" >Gallery</a>
+                        <a href="gallery.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Gallery</a>
                     </li>
                     <li>
-                        <a href="about.html">About Us</a>
+                        <a href="about.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">About Us</a>
                     </li>
                     <li>
-                        <a href="custom.html">Community</a>
+                        <a href="custom.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Community</a>
                     </li>
                 </ul>
             </div>
@@ -146,3 +160,9 @@
 
 </body>
 </html>
+
+<script>
+    document.querySelector('#navbar-default-button').addEventListener('click', () => {
+       document.querySelector('#navbar-default').classList.toggle('hidden');
+    });
+</script>

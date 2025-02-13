@@ -4,37 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About US - ABC Fitness Studio</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa" rel="stylesheet">
+    <style>
+        html, body{
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            min-height: 100vh;
+            font-family: "Comfortaa", serif;
+        }
+    </style>
 </head>
-<body >
+<body class="pb-96 text-[#00231c]">
 
-    <nav >
-        <div >
+    <nav class="bg-[#17253f] border-gray-200">
+        <div class="w-[1200px] max-w-full flex flex-wrap items-center justify-between mx-auto p-2">
 
-        <a href="" >
-            <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/38776/file/99479a5eb4cc292fa8b3cd82406bc208.png"  />
-            <span >About US</span>
+        <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/38776/file/99479a5eb4cc292fa8b3cd82406bc208.png"   class="h-11 px-2" alt="ABC Fitness Studio Logo"/>
+            <span class="text-white self-center text-2xl font-semibold whitespace-nowrap">About US</span>
         </a>
 
-        <button data-collapse-toggle="navbar-default" id="navbar-default-button" type="button" aria-controls="navbar-default" aria-expanded="false">
-            <span >Open main menu</span>
-            <svg >
+        <button data-collapse-toggle="navbar-default" id="navbar-default-button" type="button" class="cursor-pointer text-white inline-flex 
+        items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden 
+        focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
         </button>
 
-        <div >
-            <ul >
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg 
+            md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             <li>
-                <a  href="index.html" >Home</a>
+                <a  href="index.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Home</a>
             </li>
             <li>
-                <a href="gallery.html" >Gallery</a>
+                <a href="gallery.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Gallery</a>
             </li>
             <li>
-                <a href="about.html">About Us</a>
+                <a href="about.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">About Us</a>
             </li>
             <li>
-                <a href="custom.html">Community</a>
+                <a href="custom.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Community</a>
             </li>
             </ul>
         </div>
@@ -42,10 +56,10 @@
         </div>
     </nav>
 
-    <main >
+    <main class="h-full w-[900px] max-w-full m-auto p-3">
 
-        <div >
-            <h1 >About US</h1>
+        <div class=" my-5">
+            <h1 class="text-xl font-bold">About US</h1>
 
             <p>
                 ABC Fitness Studio is a local fitness haven specializing in a diverse range of classes, including yoga, Pilates, and Zumba, 
@@ -57,45 +71,45 @@
             </p>
         </div>
 
-        <div >
-            <h1 >Business Hours</h1>
+        <div class="my-5">
+            <h1 class="text-xl font-bold">Business Hours</h1>
 
-            <table >
+            <table class="w-full">
                 <tr>
-                    <td >Monday–Friday</td>
-                    <td >6 a.m. to 8 p.m.</td>
+                    <td class="p-1 border border-gray-200">Monday–Friday</td>
+                    <td class="p-1 border border-gray-200">6 a.m. to 8 p.m.</td>
                 </tr>
                 <tr>
-                    <td >Saturday</td>
-                    <td >8 a.m. to 6 p.m.</td>
+                    <td class="p-1 border border-gray-200">Saturday</td>
+                    <td class="p-1 border border-gray-200">8 a.m. to 6 p.m.</td>
                 </tr>
                 <tr>
-                    <td >Sunday</td>
-                    <td >Closed</td>
+                    <td class="p-1 border border-gray-200">Sunday</td>
+                    <td class="p-1 border border-gray-200">Closed</td>
                 </tr>
             </table>
         </div>
         
 
-        <div >
-            <h1 >Contact Us</h1>
-            <div >
+        <div class=" my-5">
+            <h1 class="text-xl font-bold">Contact Us</h1>
+            <div class="flex flex-col w-[400px] max-w-full">
                 <label for="">Name:</label>
-                <input type="text" >
+                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Name">
                 <label for="">Email Address:</label>
-                <input type="text" >
+                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Email">
                 <label for="">Phone Number:</label>
-                <input type="text" >
+                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Phone Number">
                 <label for="">Feedback/Order Information</label>
-                <textarea ></textarea>
+                <textarea class="p-1 my-2 border border-gray-200 rounded" rows="3" placeholder="Your Feedback/Custom Order Information"></textarea>
 
-                <div >
+                <div class="flex">
                     <input type="checkbox" value="">
-                    <label for="" >Custom Order</label>
+                    <label for="" class="p-2">Custom Order</label>
                 </div>
                 <div>
-                    <button >Submit</button>
-                    <button >Clear Form</button>
+                    <button class="bg-[#2343bd] text-white rounded py-1 px-5">Submit</button>
+                    <button class="bg-gray-600 text-white rounded py-1 px-5">Clear Form</button>
                 </div>
             </div>
         </div>
@@ -103,32 +117,32 @@
     </main>
 
 
-    <footer >
-        <div >
-            <div >
-                <a  >Facebook</a>
-                <a  >Instagram</a>
-                <a  >Twitter</a>
-                <a  >Youtube</a>
+    <footer class="bg-[#17253f] absolute bottom-0 inset-x-0">
+        <div class="w-[1200px] max-w-full m-auto">
+            <div class="flex  w-fit m-auto md:float-right md:m-2 text-white">
+                <a  class="p-1" href="#">Facebook</a>
+                <a  class="p-1" href="#">Instagram</a>
+                <a  class="p-1" href="#">Twitter</a>
+                <a  class="p-1" href="#">Youtube</a>
             </div>
-            <div >
-                <label for="" >Sign up for newsletter</label>
-                <input type="text" >
-                <button >Subscribe</button>
+            <div class="w-96 p-2 float-left">
+                <label for="" class="w-full block py-2 text-white">Sign up for newsletter</label>
+                <input type="text" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" placeholder="Your Email">
+                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5">Subscribe</button>
             </div>
-            <div >
-                <ul >
+            <div class="text-center w-full inline-block my-2">
+                <ul class="font-medium w-fit m-auto flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse">
                     <li>
-                        <a  href="index.html" >Home</a>
+                        <a  href="index.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="gallery.html" >Gallery</a>
+                        <a href="gallery.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Gallery</a>
                     </li>
                     <li>
-                        <a href="about.html">About Us</a>
+                        <a href="about.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">About Us</a>
                     </li>
                     <li>
-                        <a href="custom.html">Community</a>
+                        <a href="custom.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Community</a>
                     </li>
                 </ul>
             </div>

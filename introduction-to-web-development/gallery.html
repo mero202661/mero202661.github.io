@@ -4,37 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - ABC Fitness Studio</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa" rel="stylesheet">
+    <style>
+        html, body{
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            min-height: 100vh;
+            font-family: "Comfortaa", serif;
+        }
+    </style>
 </head>
-<body >
+<body class="pb-96 text-[#00231c]">
 
-    <nav >
-        <div >
+    <nav class="bg-[#17253f] border-gray-200">
+        <div class="w-[1200px] max-w-full flex flex-wrap items-center justify-between mx-auto p-2">
 
-        <a href="" >
-            <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/38776/file/99479a5eb4cc292fa8b3cd82406bc208.png"  />
-            <span >Gallery</span>
+        <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/38776/file/99479a5eb4cc292fa8b3cd82406bc208.png"   class="h-11 px-2" alt="ABC Fitness Studio Logo"/>
+            <span class="text-white self-center text-2xl font-semibold whitespace-nowrap">Gallery</span>
         </a>
 
-        <button data-collapse-toggle="navbar-default" id="navbar-default-button" type="button" aria-controls="navbar-default" aria-expanded="false">
-            <span >Open main menu</span>
-            <svg >
+        <button data-collapse-toggle="navbar-default" id="navbar-default-button" type="button" class="cursor-pointer text-white inline-flex 
+        items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden 
+        focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
         </button>
 
-        <div >
-            <ul>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg 
+            md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             <li>
-                <a  href="index.html" >Home</a>
+                <a  href="index.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Home</a>
             </li>
             <li>
-                <a href="gallery.html" >Gallery</a>
+                <a href="gallery.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Gallery</a>
             </li>
             <li>
-                <a href="about.html">About Us</a>
+                <a href="about.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">About Us</a>
             </li>
             <li>
-                <a href="custom.html">Community</a>
+                <a href="custom.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Community</a>
             </li>
             </ul>
         </div>
@@ -42,96 +56,96 @@
         </div>
     </nav>
 
-    <main >
-        <div >
-            <h1 >Workout & Gym Services & Essentials </h1>
+    <main class="h-full mb-12 w-[900px] max-w-full m-auto p-3">
+        <div class="flex mx-2">
+            <h1 class="text-xl flex-1 font-bold">Workout & Gym Services & Essentials </h1>
             <div>
-                <button >View Cart</button>
+                <button class="bg-[#2343bd] text-white p-1 px-4 rounded">View Cart</button>
             </div>
         </div>
       
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42774/file/634b3b3d8c54aab1a64132adeea9c52a.png" alt="">
-                <span >Individual yoga session</span>
-                <p >Personalized yoga session to enhance flexibility, strength, and mindfulness.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Individual yoga session</span>
+                <p class="flex-1 p-1 m-0">Personalized yoga session to enhance flexibility, strength, and mindfulness.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42775/file/bc68d12cfb597b5f58cfbeb8c5843635.png" alt="">
-                <span > Group yoga session </span>
-                <p > Guided yoga class for all levels, promoting balance and relaxation. </p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold"> Group yoga session </span>
+                <p class="flex-1 p-1 m-0"> Guided yoga class for all levels, promoting balance and relaxation. </p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42776/file/f22a292d36f0b2b41a3745a11ea0f591.png" alt="">
-                <span >Individual Pilates session</span>
-                <p > One-on-one Pilates training to improve core strength and posture.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Individual Pilates session</span>
+                <p class="flex-1 p-1 m-0"> One-on-one Pilates training to improve core strength and posture.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42777/file/589898c46344c79e7bd9e55d68793278.png" alt="">
-                <span >Group Pilates session</span>
-                <p >  Dynamic group Pilates class for flexibility, strength, and body awareness.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Group Pilates session</span>
+                <p class="flex-1 p-1 m-0">  Dynamic group Pilates class for flexibility, strength, and body awareness.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42778/file/706f44533f12ec789dfd3ab6b9b93d5c.png" alt="">
-                <span >Individual kickboxing session</span>
-                <p > Private kickboxing training to boost fitness, endurance, and technique.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Individual kickboxing session</span>
+                <p class="flex-1 p-1 m-0"> Private kickboxing training to boost fitness, endurance, and technique.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42779/file/a92541c50a423aaffda0d5cf5e5f07d0.png" alt="">
-                <span >Group kickboxing session</span>
-                <p >  High-energy kickboxing class for cardio, strength, and stress relief.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Group kickboxing session</span>
+                <p class="flex-1 p-1 m-0">  High-energy kickboxing class for cardio, strength, and stress relief.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42780/file/930ed399d8b2294942e3f956c817ac37.png" alt="">
-                <span >Yoga mat</span>
-                <p > Non-slip, cushioned mat for yoga and workouts.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Yoga mat</span>
+                <p class="flex-1 p-1 m-0"> Non-slip, cushioned mat for yoga and workouts.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42781/file/4af41aa634480951c2b22fe56d655e51.png" alt="">
-                <span >Water bottle</span>
-                <p > Durable, reusable bottle for hydration on the go.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Water bottle</span>
+                <p class="flex-1 p-1 m-0"> Durable, reusable bottle for hydration on the go.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
 
-        <div >
-            <div >
+        <div class="w-full md:w-1/3 float-left text-center">
+            <div class="border border-gray-200 rounded m-2 p-2 flex flex-col min-h-80">
                 <img src="https://sophialearning.s3.amazonaws.com/markup_pictures/42782/file/359682f2860ba4db370f01b54a6de5a0.png" alt="">
-                <span >Tshirt</span>
-                <p > Soft, breathable, moisture-wicking athletic tee.</p>
-                <button >Add to Cart</button>
+                <span class="text-base p-1 font-bold">Tshirt</span>
+                <p class="flex-1 p-1 m-0"> Soft, breathable, moisture-wicking athletic tee.</p>
+                <button class="bg-[#2343bd] text-white p-2">Add to Cart</button>
             </div>
         </div>
 
@@ -140,32 +154,32 @@
     </main>
 
 
-    <footer >
-        <div >
-            <div >
-                <a  >Facebook</a>
-                <a  >Instagram</a>
-                <a  >Twitter</a>
-                <a  >Youtube</a>
+    <footer class="bg-[#17253f] absolute bottom-0 inset-x-0">
+        <div class="w-[1200px] max-w-full m-auto">
+            <div class="flex  w-fit m-auto md:float-right md:m-2 text-white">
+                <a  class="p-1" href="#">Facebook</a>
+                <a  class="p-1" href="#">Instagram</a>
+                <a  class="p-1" href="#">Twitter</a>
+                <a  class="p-1" href="#">Youtube</a>
             </div>
-            <div >
-                <label for="" >Sign up for newsletter</label>
-                <input type="text" >
-                <button >Subscribe</button>
+            <div class="w-96 p-2 float-left">
+                <label for="" class="w-full block py-2 text-white">Sign up for newsletter</label>
+                <input type="text" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" placeholder="Your Email">
+                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5">Subscribe</button>
             </div>
-            <div >
-                <ul >
+            <div class="text-center w-full inline-block my-2">
+                <ul class="font-medium w-fit m-auto flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse">
                     <li>
-                        <a  href="index.html" >Home</a>
+                        <a  href="index.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="gallery.html" >Gallery</a>
+                        <a href="gallery.html" class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Gallery</a>
                     </li>
                     <li>
-                        <a href="about.html">About Us</a>
+                        <a href="about.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">About Us</a>
                     </li>
                     <li>
-                        <a href="custom.html">Community</a>
+                        <a href="custom.html"class="block py-2 px-3 text-white rounded-sm md:p-0" aria-current="page">Community</a>
                     </li>
                 </ul>
             </div>
@@ -176,3 +190,9 @@
 
 </body>
 </html>
+
+<script>
+    document.querySelector('#navbar-default-button').addEventListener('click', () => {
+       document.querySelector('#navbar-default').classList.toggle('hidden');
+    });
+</script>
