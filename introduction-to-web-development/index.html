@@ -158,11 +158,11 @@
                 <a  class="p-1" href="#">Twitter</a>
                 <a  class="p-1" href="#">Youtube</a>
             </div>
-            <div class="w-96 p-2 float-left">
+            <form class="w-96 p-2 float-left">
                 <label for="" class="w-full block py-2 text-white">Sign up for newsletter</label>
-                <input type="text" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" placeholder="Your Email">
-                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5">Subscribe</button>
-            </div>
+                <input type="email" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" id="userEmail" placeholder="Your Email" required />
+                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5" id="Subscribe">Subscribe</button>
+            </form>
             <div class="text-center w-full inline-block my-2">
                 <ul class="font-medium w-fit m-auto flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse">
                     <li>
@@ -190,5 +190,9 @@
 <script>
     document.querySelector('#navbar-default-button').addEventListener('click', () => {
        document.querySelector('#navbar-default').classList.toggle('hidden');
+    });
+
+    document.querySelector('#Subscribe').addEventListener('click', () => {
+        alert('Please enter your email address')
     });
 </script>

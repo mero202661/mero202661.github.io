@@ -93,25 +93,25 @@
 
         <div class=" my-5">
             <h1 class="text-xl font-bold">Contact Us</h1>
-            <div class="flex flex-col w-[400px] max-w-full">
+            <form class="flex flex-col w-[400px] max-w-full">
                 <label for="">Name:</label>
-                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Name">
+                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Name" id="form-name" required>
                 <label for="">Email Address:</label>
-                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Email">
+                <input type="email" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Email" id="form-email" required>
                 <label for="">Phone Number:</label>
-                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Phone Number">
+                <input type="text" class="p-1 my-2 border border-gray-200 rounded" placeholder="Your Phone Number" required id="form-phone">
                 <label for="">Feedback/Order Information</label>
-                <textarea class="p-1 my-2 border border-gray-200 rounded" rows="3" placeholder="Your Feedback/Custom Order Information"></textarea>
+                <textarea class="p-1 my-2 border border-gray-200 rounded" rows="3" placeholder="Your Feedback/Custom Order Information" id="form-feedback" required></textarea>
 
                 <div class="flex">
-                    <input type="checkbox" value="">
-                    <label for="" class="p-2">Custom Order</label>
+                    <input type="checkbox"  id="form-custom-order">
+                    <label for="form-custom-order" class="p-2">Custom Order</label>
                 </div>
                 <div>
-                    <button class="bg-[#2343bd] text-white rounded py-1 px-5">Submit</button>
-                    <button class="bg-gray-600 text-white rounded py-1 px-5">Clear Form</button>
+                    <button class="bg-[#2343bd] text-white rounded py-1 px-5" id="submit-form">Submit</button>
+                    <button class="bg-gray-600 text-white rounded py-1 px-5" id="clear-form">Clear Form</button>
                 </div>
-            </div>
+            </form>
         </div>
 
     </main>
@@ -125,11 +125,11 @@
                 <a  class="p-1" href="#">Twitter</a>
                 <a  class="p-1" href="#">Youtube</a>
             </div>
-            <div class="w-96 p-2 float-left">
+            <form class="w-96 p-2 float-left">
                 <label for="" class="w-full block py-2 text-white">Sign up for newsletter</label>
-                <input type="text" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" placeholder="Your Email">
-                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5">Subscribe</button>
-            </div>
+                <input type="email" class="p-1.5 w-60 text-black border bg-[#fcfcfc] border-gray-200 rounded" id="userEmail" placeholder="Your Email" required />
+                <button class="bg-[#2343bd] text-white w-fit float-right rounded py-2 px-5" id="Subscribe">Subscribe</button>
+            </form>
             <div class="text-center w-full inline-block my-2">
                 <ul class="font-medium w-fit m-auto flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse">
                     <li>
@@ -158,4 +158,37 @@
     document.querySelector('#navbar-default-button').addEventListener('click', () => {
        document.querySelector('#navbar-default').classList.toggle('hidden');
     });
+    
+    document.querySelector('#Subscribe').addEventListener('click', () => {
+        alert('Please enter your email address')
+    });
+
+    document.querySelector('#submit-form').addEventListener('click', () => {
+        const formName = document.querySelector('#form-name').value
+        const formEmail = document.querySelector('#form-email').value
+        const formFeedback = document.querySelector('#form-feedback').value
+        const formPhone = document.querySelector('#form-phone').value
+        const formCustomOrder = document.querySelector('#form-custom-order').checked
+        if(formName && formEmail && formFeedback){
+            localStorage.setItem('formInfo', JSON.stringify({          
+                name: formName,
+                customOrder: formCustomOrder,
+                feedback: formFeedback,
+                email: formEmail,
+                phone: formPhone,
+            }));
+            alert('Thank you for your message ' + formName );
+        }else{
+            alert('please enter your name, email and feedback')
+        }
+    });
+    document.querySelector('#clear-form').addEventListener('click', () => {
+        localStorage.removeItem('formInfo')
+        document.querySelector('#form-name').value = ''
+        document.querySelector('#form-email').value = ''
+        document.querySelector('#form-feedback').value = ''
+        document.querySelector('#form-phone').value = ''
+        document.querySelector('#form-custom-order').removeAttribute("checked")
+    });
+
 </script>
