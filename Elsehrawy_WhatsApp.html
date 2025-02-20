@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full m-0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elsehrawy WhatsApp</title>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script> 
+<style>
+    .me::after{
+        content: '';
+        border-top: 0 solid transparent;
+        border-left: 15px solid #e4ffc9;
+        border-bottom: 15px solid transparent;
+        position: absolute;
+        right: -12px;
+        top: 0px;
+    }
+    .user::before{
+        content: '';
+        border-top: 0 solid transparent;
+        border-right: 15px solid #ffff;
+        border-bottom: 15px solid transparent;
+        position: absolute;
+        left: -12px;
+        top: 0px;
+    }
+</style>
+</head>
+<body class="h-full m-0">
+    <div id="chat-container" class="h-full bg-[url('chat-background.png')] bg-contain">
+        
+        <div id="SignUp" class="w-96 h-12 max-w-full absolute m-auto inset-0 flex">
+            
+            <input type="text" name="" id="myUserId" placeholder="Enter your phone number"
+            class="bg-white flex-1 p-2 rounded m-1">
+
+            <button onclick="startConnection()" 
+            class="bg-blue-600 py-1 px-3 m-1 cursor-pointer
+             rounded-md text-white"> SignUp </button>
+        </div>
+
+        <div  id="StartChat" class="hidden h-12 absolute m-auto inset-0 flex w-[600px] max-w-full">
+            
+            <input type="text" name="" id="remoteUserId" placeholder="Enter the number you want to chat with"
+            class="bg-white flex-1 p-2 rounded m-1">
+
+            <button onclick="connectToRemoteUser()" 
+            class="bg-[#075e54] py-1 px-3 m-1 cursor-pointer
+             rounded-md text-white"> Start Chat </button>
+        </div>
+
+        <div id="chat" class="hidden min-h-screen flex flex-col w-[600px] max-w-full m-auto">
+            <div id="chat-header" class="px-2 py-1 flex text-white bg-[#075e54]">
+                <p id="connectionID" class="text-xl p-2 flex-1 m-0"></p>
+
+                <svg class="h-8 w-8 text-white p-2 box-content"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                
+                <svg class="h-8 w-8 text-white p-2 box-content"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <polygon points="23 7 16 12 23 17 23 7" />  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
+
+            </div>
+            
+            <div id="messages" class="flex-1"></div>
+
+            <div id="message-input" class="w-full h-12 my-2 px-2 flex">
+                
+                <input type="text" id="message" 
+                placeholder="Enter your message"
+                class="bg-white flex-1 p-2 rounded m-1">
+                
+                <button class="py-1 px-3 bg-[#075e54] 
+                cursor-pointer rounded-md m-1" onclick="sendMessage()">
+
+                    <svg class="h-8 w-8 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <line x1="22" y1="2" x2="11" y2="13" />  <polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
+
+                </button>
+
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>
+<script>
+    var peerConnection;
+    var RemoteUserConnection;
+    function startConnection(){
+        const connectionId = document.getElementById("myUserId").value
+        if(!connectionId && connectionId.length < 7){return}
+        peerConnection = new Peer(connectionId);
+        peerConnection.on("error",(e)=>{
+            alert(e);
+        });
+        peerConnection.on("open",()=>{
+            const SignUp = document.getElementById("SignUp");
+            SignUp.classList.add("hidden")
+            
+            const StartChat = document.getElementById("StartChat");
+            StartChat.classList.add("flex")
+            StartChat.classList.remove("hidden")
+        });
+
+        peerConnection.on("connection",gotConnection);
+
+        peerConnection.on("close",(connection)=>{
+            console.log('==connection=closed=',connection)
+        });
+    }
+    function connectToRemoteUser(){
+        const remoteUserConnectionId = document.getElementById("remoteUserId").value
+        if(!remoteUserConnectionId){return}
+        const myConnection = peerConnection.connect(remoteUserConnectionId)
+        gotConnection(myConnection)
+    }
+
+    function gotConnection(connection) {
+        RemoteUserConnection = connection
+        RemoteUserConnection.on("open",()=>{
+            document.getElementById("connectionID").textContent =  RemoteUserConnection.peer;
+            console.log('==open Remote User connection==',connection);
+            const StartChat = document.getElementById("StartChat");
+            StartChat.classList.add("hidden")
+            StartChat.classList.remove("flex")
+
+            writeMessage('system','Started connetion with '+ RemoteUserConnection.peer)
+
+            const chat = document.getElementById("chat");
+            chat.classList.add("flex")
+            chat.classList.remove("hidden");
+
+            RemoteUserConnection.on("data",(data)=>{
+                console.log('=sent=data==',data);
+                writeMessage('user',data)
+            });
+
+            RemoteUserConnection.on("close",disconnectRemoteUser);
+        })
+    }
+
+    function sendMessage() {
+        const message = document.getElementById("message");
+        if(!message){return;}
+        RemoteUserConnection.send(message.value);
+        writeMessage('me',message.value)
+        message.value = '';
+    }
+
+    function writeMessage(sender,messageText){
+        const message = document.createElement('p');
+        message.textContent = messageText;
+        if(sender === 'me'){
+            message.classList.add(...['me','my-1','mx-4','ml-auto','px-4','py-2','bg-[#e4ffc9]','w-fit','rounded','relative'])
+        }else if(sender === 'user'){
+            message.classList.add(...['user','my-1','mx-4','px-4','py-2','bg-white','w-fit','rounded','relative'])
+        }else{
+            message.classList.add(...['my-1','mx-auto','px-4','py-2','bg-[#7aaaff4f]','w-fit','rounded'])
+        }
+        document.getElementById("messages").appendChild(message)
+    }
+
+    function disconnectRemoteUser(){
+        console.log('====RemoteUser=disconnected===='); 
+        writeMessage('system','Connetion with '+ RemoteUserConnection.peer + ' ended')
+        RemoteUserConnection = null;
+    }
+</script>
